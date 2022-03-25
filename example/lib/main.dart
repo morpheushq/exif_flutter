@@ -59,6 +59,7 @@ class _MyAppState extends State<MyApp> {
       longitude: longitude,
       dateTimeOriginal: dateTimeOriginal,
       userComment: userComment,
+      altitude: null,
     );
 
     await Exif.setAttributes(filePath, newAttributes);

@@ -13,14 +13,14 @@ class Metadata {
   Metadata({
     this.altitude,
     this.altitudeRef,
-    this.latitude,
-    this.longitude,
-    this.userComment,
-    this.dateTimeOriginal,
+    required this.latitude,
+    required this.longitude,
+    required this.userComment,
+    required this.dateTimeOriginal,
   });
 
-  final double altitude;
-  final double altitudeRef;
+  final double? altitude;
+  final double? altitudeRef;
   final double latitude;
   final double longitude;
   final String userComment;
@@ -42,8 +42,9 @@ class Metadata {
 
   Map<String, String> getAltitude() {
     return {
-      MetadataTag.altitude: altitude.abs().toString(),
-      MetadataTag.altitudeRef: altitudeRef ?? getAltitudeRef(altitude),
+      MetadataTag.altitude: altitude?.abs().toString() ?? '',
+      MetadataTag.altitudeRef:
+          altitudeRef?.toString() ?? getAltitudeRef(altitude ?? 0),
     };
   }
 
