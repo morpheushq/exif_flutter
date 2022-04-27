@@ -41,7 +41,7 @@ public class ExifPlugin: FlutterPlugin, MethodCallHandler {
     if (call.method == "getImageAttributes") {
       val path = call.argument<String>("filePath")
       try {
-        val exif = ExifInterface(path)
+        val exif = ExifInterface(path).orEmpty()
         val hashMap = HashMap<String, String>()
         for (tag in tags) {
           val attribute = exif.getAttribute(tag)
@@ -57,7 +57,7 @@ public class ExifPlugin: FlutterPlugin, MethodCallHandler {
       val path = call.argument<String>("filePath")
       val attributes = call.argument<HashMap<String, String>>("attributes")
       try {
-        val exif = ExifInterface(path)
+        val exif = ExifInterface(path).orEmpty()
         for (tag in tags) {
           if (attributes != null && attributes.containsKey(tag) && attributes[tag] != null) {
             var attribute = attributes[tag]
