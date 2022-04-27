@@ -5,14 +5,13 @@ import 'dart:typed_data';
 import 'package:exif_flutter/exif_flutter.dart';
 import 'package:exif_flutter/tags.dart';
 import 'package:flutter/material.dart';
-import 'package:path_provider/path_provider.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:gallery_saver/gallery_saver.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:path_provider/path_provider.dart';
 
 Future<void> writeToFile(ByteData data, String path) {
   final buffer = data.buffer;
-  return new File(path)
-      .writeAsBytes(buffer.asUint8List(data.offsetInBytes, data.lengthInBytes));
+  return new File(path).writeAsBytes(buffer.asUint8List(data.offsetInBytes, data.lengthInBytes));
 }
 
 void main() => runApp(MyApp());
@@ -31,7 +30,8 @@ class _MyAppState extends State<MyApp> {
   }
 
   getMetadata() async {
-    File file = await ImagePicker.pickImage(source: ImageSource.gallery);
+    ImagePicker imagePicker = ImagePicker();
+    XFile file = await imagePicker.pickImage(source: ImageSource.gallery);
     if (file != null) {
       final fileBytes = await file.readAsBytes();
       mainCheckFlow(ByteData.view(fileBytes.buffer));
@@ -78,7 +78,7 @@ class _MyAppState extends State<MyApp> {
           title: const Text('Example App'),
         ),
         body: Center(
-            child: RaisedButton(
+            child: ElevatedButton(
           onPressed: getMetadata,
           child: Text("Get Image"),
         )),

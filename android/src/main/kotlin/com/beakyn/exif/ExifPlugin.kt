@@ -37,40 +37,44 @@ public class ExifPlugin: FlutterPlugin, MethodCallHandler {
 
 
   override fun onMethodCall(@NonNull call: MethodCall, @NonNull result: Result) {
-    if (call.method == "getImageAttributes") {
-      val path = call.argument<String>("filePath")
-      val exif = ExifInterface(path)
-      val hashMap = HashMap<String, String>()
-      for (tag in tags) {
-        val attribute = exif.getAttribute(tag)
-        if (attribute != null) {
-          hashMap[tag] = attribute
-        }
-      }
-      result.success(hashMap)
-    } else if (call.method == "setImageAttributes") {
-      val path = call.argument<String>("filePath")
-      val attributes = call.argument<HashMap<String, String>>("attributes")
-      val exif = ExifInterface(path)
-      for (tag in tags) {
-        if (attributes != null && attributes.containsKey(tag) && attributes[tag] != null) {
-          var attribute = attributes[tag]
-
-          if (
-            tag == ExifInterface.TAG_GPS_LATITUDE ||
-            tag == ExifInterface.TAG_GPS_LONGITUDE ||
-            tag == ExifInterface.TAG_GPS_ALTITUDE
-          ) {
-            attribute = convert(attributes[tag]!!.toDouble())
+    when (call.method) {
+        "getImageAttributes" -> {
+          val path = call.argument<String>("filePath")
+          val exif = path?.let { ExifInterface(it) }
+          val hashMap = HashMap<String, String>()
+          for (tag in tags) {
+            val attribute = exif?.getAttribute(tag)
+            if (attribute != null) {
+              hashMap[tag] = attribute
+            }
           }
-
-          exif.setAttribute(tag, attribute)
+          result.success(hashMap)
         }
-      }
-      exif.saveAttributes()
-      result.success(null)
-    } else {
-      result.notImplemented()
+        "setImageAttributes" -> {
+          val path = call.argument<String>("filePath")
+          val attributes = call.argument<HashMap<String, String>>("attributes")
+          val exif = path?.let { ExifInterface(it) }
+          for (tag in tags) {
+            if (attributes != null && attributes.containsKey(tag) && attributes[tag] != null) {
+              var attribute = attributes[tag]
+
+              if (
+                tag == ExifInterface.TAG_GPS_LATITUDE ||
+                tag == ExifInterface.TAG_GPS_LONGITUDE ||
+                tag == ExifInterface.TAG_GPS_ALTITUDE
+              ) {
+                attribute = convert(attributes[tag]!!.toDouble())
+              }
+
+              exif?.setAttribute(tag, attribute)
+            }
+          }
+          exif?.saveAttributes()
+          result.success(null)
+        }
+        else -> {
+          result.notImplemented()
+        }
     }
   }
 
