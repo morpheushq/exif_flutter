@@ -10,6 +10,7 @@ import io.flutter.plugin.common.MethodChannel
 import io.flutter.plugin.common.MethodChannel.MethodCallHandler
 import io.flutter.plugin.common.MethodChannel.Result
 import io.flutter.plugin.common.PluginRegistry.Registrar
+import java.io.IOException
 
 /** ExifPlugin */
 public class ExifPlugin: FlutterPlugin, MethodCallHandler {
@@ -37,44 +38,46 @@ public class ExifPlugin: FlutterPlugin, MethodCallHandler {
 
 
   override fun onMethodCall(@NonNull call: MethodCall, @NonNull result: Result) {
-    when (call.method) {
-        "getImageAttributes" -> {
-          val path = call.argument<String>("filePath")
-          val exif = path?.let { ExifInterface(it) }
-          val hashMap = HashMap<String, String>()
-          for (tag in tags) {
-            val attribute = exif?.getAttribute(tag)
-            if (attribute != null) {
-              hashMap[tag] = attribute
-            }
+    if (call.method == "getImageAttributes") {
+      val path = call.argument<String>("filePath")
+      try {
+        val exif = ExifInterface(path)
+        val hashMap = HashMap<String, String>()
+        for (tag in tags) {
+          val attribute = exif.getAttribute(tag)
+          if (attribute != null) {
+            hashMap[tag] = attribute
           }
-          result.success(hashMap)
         }
-        "setImageAttributes" -> {
-          val path = call.argument<String>("filePath")
-          val attributes = call.argument<HashMap<String, String>>("attributes")
-          val exif = path?.let { ExifInterface(it) }
-          for (tag in tags) {
-            if (attributes != null && attributes.containsKey(tag) && attributes[tag] != null) {
-              var attribute = attributes[tag]
+        result.success(hashMap)
+      }catch(e: IOException){
 
-              if (
-                tag == ExifInterface.TAG_GPS_LATITUDE ||
-                tag == ExifInterface.TAG_GPS_LONGITUDE ||
-                tag == ExifInterface.TAG_GPS_ALTITUDE
-              ) {
-                attribute = convert(attributes[tag]!!.toDouble())
-              }
+      }
+    } else if (call.method == "setImageAttributes") {
+      val path = call.argument<String>("filePath")
+      val attributes = call.argument<HashMap<String, String>>("attributes")
+      try {
+        val exif = ExifInterface(path)
+        for (tag in tags) {
+          if (attributes != null && attributes.containsKey(tag) && attributes[tag] != null) {
+            var attribute = attributes[tag]
 
-              exif?.setAttribute(tag, attribute)
+            if (
+              tag == ExifInterface.TAG_GPS_LATITUDE ||
+              tag == ExifInterface.TAG_GPS_LONGITUDE ||
+              tag == ExifInterface.TAG_GPS_ALTITUDE
+            ) {
+              attribute = convert(attributes[tag]!!.toDouble())
             }
+
+            exif.setAttribute(tag, attribute)
           }
-          exif?.saveAttributes()
-          result.success(null)
         }
-        else -> {
-          result.notImplemented()
-        }
+        exif.saveAttributes()
+        result.success(null)
+      }catch(e: IOException){}
+    } else {
+      result.notImplemented()
     }
   }
 
