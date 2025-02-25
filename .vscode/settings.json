@@ -1,9 +1,10 @@
 {
-    "files.associations": {
-        "array": "cpp",
-        "string": "cpp",
-        "string_view": "cpp",
-        "vector": "cpp",
-        "__locale": "cpp"
-    }
+  "files.associations": {
+    "array": "cpp",
+    "string": "cpp",
+    "string_view": "cpp",
+    "vector": "cpp",
+    "__locale": "cpp"
+  },
+  "dart.flutterSdkPath": ".fvm/versions/3.29.0"
 }
