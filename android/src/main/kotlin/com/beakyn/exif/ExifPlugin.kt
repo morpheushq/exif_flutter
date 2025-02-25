@@ -9,7 +9,11 @@ import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
 import io.flutter.plugin.common.MethodChannel.MethodCallHandler
 import io.flutter.plugin.common.MethodChannel.Result
-import io.flutter.plugin.common.PluginRegistry.Registrar
+import io.flutter.plugin.common.MethodCall
+//import io.flutter.plugin.common.PluginRegistry.Registrar
+import io.flutter.embedding.engine.plugins.FlutterPlugin
+
+
 import java.io.IOException
 
 /** ExifPlugin */
@@ -28,12 +32,21 @@ public class ExifPlugin: FlutterPlugin, MethodCallHandler {
   // them functionally equivalent. Only one of onAttachedToEngine or registerWith will be called
   // depending on the user's project. onAttachedToEngine or registerWith must both be defined
   // in the same class.
-  companion object {
-    @JvmStatic
-    fun registerWith(registrar: Registrar) {
-      val channel = MethodChannel(registrar.messenger(), "beakyn.com/exif")
-      channel.setMethodCallHandler(ExifPlugin())
-    }
+//  companion object {
+//    @JvmStatic
+//    fun registerWith(registrar: Registrar) {
+//      val channel = MethodChannel(registrar.messenger(), "beakyn.com/exif")
+//      channel.setMethodCallHandler(ExifPlugin())
+//    }
+//  }
+
+  override fun onAttachedToEngine(flutterPluginBinding: FlutterPlugin.FlutterPluginBinding) {
+    channel = MethodChannel(flutterPluginBinding.binaryMessenger, "beakyn.com/exif")
+    channel.setMethodCallHandler(this)
+  }
+
+  override fun onDetachedFromEngine(binding: FlutterPlugin.FlutterPluginBinding) {
+    channel.setMethodCallHandler(null)
   }
 
 
