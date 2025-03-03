@@ -1,5 +1,15 @@
+package android
+
+plugins {
+    id 'com.android.application' version '8.8.0' apply false
+    id 'com.android.library' version '8.8.0' apply false
+    id 'org.jetbrains.kotlin.android' version '2.1.10' apply false
+}
+
 group 'com.beakyn.exif'
 version '1.0-SNAPSHOT'
+
+
 
 buildscript {
     ext.kotlin_version = '1.6.10'
@@ -21,11 +31,8 @@ rootProject.allprojects {
     }
 }
 
-apply plugin: 'com.android.library'
-apply plugin: 'kotlin-android'
-
 android {
-    compileSdkVersion 31
+    compileSdkVersion 35
     namespace "com.beakyn.exif"
 
     sourceSets {
@@ -34,7 +41,7 @@ android {
         }
     }
     defaultConfig {
-        minSdkVersion 26
+        minSdkVersion 29
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     lintOptions {
