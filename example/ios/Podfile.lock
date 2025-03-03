@@ -1,0 +1,59 @@
+PODS:
+  - exif_flutter (0.0.1):
+    - Flutter
+    - SYPictureMetadata (~> 1.4)
+  - Flutter (1.0.0)
+  - flutter_plugin_android_lifecycle (0.0.1):
+    - Flutter
+  - gallery_saver (0.0.1):
+    - Flutter
+  - image_picker (0.0.1):
+    - Flutter
+  - Mantle (2.1.1):
+    - Mantle/extobjc (= 2.1.1)
+  - Mantle/extobjc (2.1.1)
+  - path_provider (0.0.1):
+    - Flutter
+  - SYPictureMetadata (1.4.3):
+    - Mantle
+
+DEPENDENCIES:
+  - exif_flutter (from `.symlinks/plugins/exif_flutter/ios`)
+  - Flutter (from `Flutter`)
+  - flutter_plugin_android_lifecycle (from `.symlinks/plugins/flutter_plugin_android_lifecycle/ios`)
+  - gallery_saver (from `.symlinks/plugins/gallery_saver/ios`)
+  - image_picker (from `.symlinks/plugins/image_picker/ios`)
+  - path_provider (from `.symlinks/plugins/path_provider/ios`)
+
+SPEC REPOS:
+  trunk:
+    - Mantle
+    - SYPictureMetadata
+
+EXTERNAL SOURCES:
+  exif_flutter:
+    :path: ".symlinks/plugins/exif_flutter/ios"
+  Flutter:
+    :path: Flutter
+  flutter_plugin_android_lifecycle:
+    :path: ".symlinks/plugins/flutter_plugin_android_lifecycle/ios"
+  gallery_saver:
+    :path: ".symlinks/plugins/gallery_saver/ios"
+  image_picker:
+    :path: ".symlinks/plugins/image_picker/ios"
+  path_provider:
+    :path: ".symlinks/plugins/path_provider/ios"
+
+SPEC CHECKSUMS:
+  exif_flutter: 5c48c5012427ad2601e2855d844eff46dc009d51
+  Flutter: 0e3d915762c693b495b44d77113d4970485de6ec
+  flutter_plugin_android_lifecycle: 47de533a02850f070f5696a623995e93eddcdb9b
+  gallery_saver: 9fc173c9f4fcc48af53b2a9ebea1b643255be542
+  image_picker: e3eacd46b94694dde7cf2705955cece853aa1a8f
+  Mantle: 35238ae6f2e2b2d474fa7b67fee82a59fea71915
+  path_provider: fb74bd0465e96b594bb3b5088ee4a4e7bb1f2a9d
+  SYPictureMetadata: fa35cbfdd9089241dfe5c798a11504546c5255e9
+
+PODFILE CHECKSUM: 1b66dae606f75376c5f2135a8290850eeb09ae83
+
+COCOAPODS: 1.8.4
